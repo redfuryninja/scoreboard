@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://c76xoy2llpsmd"]
+
+[ext_resource type="Script" uid="uid://l4e104dedv1m" path="res://scripts/enemy.gd" id="1_7c7n6"]
+[ext_resource type="Texture2D" uid="uid://bb6aisi6oas5c" path="res://assets/deer 1.png" id="1_u3xnd"]
+[ext_resource type="Texture2D" uid="uid://c2akdnas5t5rb" path="res://assets/deer 2.png" id="2_7c7n6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pr43h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u3xnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_7c7n6")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_euvas"]
+size = Vector2(35, 32.523773)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67o6a"]
+size = Vector2(35.074047, 20.265005)
+
+[node name="deer" type="CharacterBody2D" unique_id=1453270968]
+scale = Vector2(6.415, 6.415)
+script = ExtResource("1_7c7n6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=868352197]
+sprite_frames = SubResource("SpriteFrames_pr43h")
+animation = &"run"
+autoplay = "run"
+frame_progress = 0.59716666
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1623549324]
+position = Vector2(0.49999994, 0.2618856)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_euvas")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1864999525]
+light_mask = 3
+visibility_layer = 3
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1490287804]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(0.5455953, -5.9236145)
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_67o6a")
+debug_color = Color(0.9953061, 0, 0.21541578, 0.41960785)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

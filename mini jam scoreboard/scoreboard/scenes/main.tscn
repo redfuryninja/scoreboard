@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cdwcvlms758a3"]
+
+[ext_resource type="PackedScene" uid="uid://cv48t4h3v6s34" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cua30ugy70pvw" path="res://scripts/spawner.gd" id="3_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://bh7xfjwskq3jl" path="res://icon.svg" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://c76xoy2llpsmd" path="res://scenes/deer.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://bhwl75vql753h" path="res://scenes/fox.tscn" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://0or0b5hbdj3j" path="res://scripts/text_edit.gd" id="6_tefeu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67o6a"]
+size = Vector2(2759, 140)
+
+[node name="world" type="Node2D" unique_id=1306404170]
+
+[node name="ground" type="StaticBody2D" parent="." unique_id=1888393974]
+position = Vector2(60, 395)
+
+[node name="Sprite2D" type="Sprite2D" parent="ground" unique_id=1850996979]
+position = Vector2(1320.5, 92)
+scale = Vector2(21.523438, 1)
+texture = ExtResource("3_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground" unique_id=1816029579]
+position = Vector2(1321.5, 99)
+shape = SubResource("RectangleShape2D_67o6a")
+
+[node name="main" parent="." unique_id=2134166165 instance=ExtResource("1_o5qli")]
+position = Vector2(56.999996, 317.99997)
+
+[node name="spawner1" type="Node2D" parent="." unique_id=844568009]
+position = Vector2(1282, 340)
+script = ExtResource("3_jyhfs")
+enemyScene = ExtResource("4_tbgi4")
+
+[node name="Timer" type="Timer" parent="spawner1" unique_id=1112993747]
+wait_time = 3.0
+autostart = true
+
+[node name="spawner2" type="Node2D" parent="." unique_id=219095044]
+position = Vector2(2689, 383)
+script = ExtResource("3_jyhfs")
+enemyScene = ExtResource("5_tbgi4")
+
+[node name="Timer" type="Timer" parent="spawner2" unique_id=847360224]
+wait_time = 2.0
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1973416117]
+
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer" unique_id=1133831256]
+offset_right = 196.0
+offset_bottom = 39.0
+script = ExtResource("6_tefeu")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=342330002]
+position = Vector2(1029, 317)
+zoom = Vector2(0.565, 0.785)
+
+[connection signal="timeout" from="spawner1/Timer" to="spawner1" method="_on_timer_timeout"]
+[connection signal="timeout" from="spawner2/Timer" to="spawner2" method="_on_timer_timeout"]

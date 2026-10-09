@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://bhwl75vql753h"]
+
+[ext_resource type="Script" uid="uid://l4e104dedv1m" path="res://scripts/enemy.gd" id="1_35nom"]
+[ext_resource type="Texture2D" uid="uid://bnpg26jbcft5y" path="res://assets/fox 1.png" id="1_ufccv"]
+[ext_resource type="Texture2D" uid="uid://da2qy4srkghsx" path="res://assets/fox 2.png" id="2_35nom"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u3xnd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ufccv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_35nom")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3u0el"]
+size = Vector2(36, 14)
+
+[node name="fox" type="CharacterBody2D" unique_id=188324842]
+scale = Vector2(6.415, 6.415)
+script = ExtResource("1_35nom")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1014258961]
+sprite_frames = SubResource("SpriteFrames_u3xnd")
+animation = &"run"
+autoplay = "run"
+frame_progress = 0.9562981
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=67687595]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_3u0el")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2049118074]
+light_mask = 3
+visibility_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2011568639]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_3u0el")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
