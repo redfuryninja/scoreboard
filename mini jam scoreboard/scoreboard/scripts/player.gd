@@ -6,6 +6,27 @@ var stance = 1
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+func shoot():
+	var instance = projectile.instantiate()
+	instance.dir = rotation
+	if(stance == 2):
+		instance.dir -= 45
+	instance.spawnPos = global_position
+	match stance:
+		0:
+			instance.ypos = position.y + 400
+			instance.xpos = position.x + 200
+		1:
+			instance.ypos = position.y + 250
+			instance.xpos = position.x + 45
+		2:
+			instance.ypos = position.y + 250
+			instance.xpos = position.x + 110
+	instance.spawnRot = rotation
+	instance.zdex = z_index -1
+	main.add_child(instance)
+	
+
 func upShoot():
 	var instance = projectile.instantiate()
 	instance.dir = rotation - 45
@@ -42,21 +63,27 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	
-	if stance == 0:
-		sprite.animation = "down"
-	elif stance == 1:
-		sprite.animation = "middle"
-	elif stance == 2:
-		sprite.animation = "up"
-	# Handle jump.
 		
-	if Input.is_action_just_pressed("fire") and stance == 2:
-		upShoot()
-	if Input.is_action_just_pressed("fire") and stance == 1:
-		middleShoot()
-	if Input.is_action_just_pressed("fire") and stance == 0:
-		downShoot()
+	match stance:
+		0:
+			sprite.animation = "down"
+		1:
+			sprite.animation = "middle"
+		2:
+			sprite.animation = "up"
+
+		
+	# Handle jump.
+	
+	if (Input.is_action_just_pressed("fire")):
+		shoot();
+		
+	#if Input.is_action_just_pressed("fire") and stance == 2:
+		#upShoot()
+	#if Input.is_action_just_pressed("fire") and stance == 1:
+		#middleShoot()
+	#if Input.is_action_just_pressed("fire") and stance == 0:
+		#downShoot()
 	
 	if Input.is_action_just_pressed("up"):
 		stance += 1
